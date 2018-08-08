@@ -1,9 +1,12 @@
 import dataset
+import tkinter
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from time import sleep
 
-def calculate_all_distances(title):
-    
-    data = dataset.execute()
+DATA = dataset.execute()
+TITLES = [sample['title'] for sample in DATA]
+
+def calculate_all_distances(title, data):
     
     def cosine_sim(text1, text2):
         #vectorizer = CountVectorizer(strip_accents='unicode', decode_error='ignore', analyzer='word', ngram_range=(1,1), stop_words='english')
@@ -14,7 +17,6 @@ def calculate_all_distances(title):
     results = []
     text_X = None
     for sample in data:
-        print(sample['title'])
         # extract text of selected recipe
         if sample['title'] == title :
             text_X = ' '.join(sample['directions'])
@@ -30,9 +32,16 @@ def calculate_all_distances(title):
 def display_similar_recipes(num, recipes):
     
     recipes.sort(key=lambda tup: tup[1], reverse=True)
-    print(recipes[:num])  
+    for i in range(0,num+1):
+        print(recipes[i])
+        print('\n')
+        
+def execute():
+    
+    title = 'Turkey Cream Puff Pie'
+    results = calculate_all_distances(title, DATA)
+    display_similar_recipes(10, results)
 
 if __name__ == '__main__':
     
-    recipes = calculate_all_distances('Artichoke and Parmesan Risotto')
-    display_similar_recipes(10, recipes)
+    execute()
