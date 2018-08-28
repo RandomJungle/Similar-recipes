@@ -19,7 +19,7 @@ scrollbary.pack(side=tk.RIGHT, fill=tk.Y)
 scrollbarx = tk.Scrollbar(frm, orient="horizontal")
 scrollbarx.pack(side=tk.BOTTOM, fill=tk.X)
 
-lbx = tk.Listbox(frm, width=50, yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set, font=("Helvetica", 12), selectmode=tk.SINGLE)
+lbx = tk.Listbox(frm, width=50, yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set, font=("Helvetica", 12))
 selected_item = tk.StringVar()
 def select_title(event):
     line = lbx.curselection()[0]
@@ -27,6 +27,8 @@ def select_title(event):
     selected_item.set(item)
 lbx.bind("<<ListboxSelect>>", select_title)
 lbx.pack(expand=True, fill=tk.Y)
+
+print(selected_item)
 
 scrollbary.config(command=lbx.yview)
 scrollbarx.config(command=lbx.xview)
